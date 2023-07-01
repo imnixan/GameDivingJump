@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour
 {
-    [SerializeReference] private GameSettings gs;
     private AudioSource soundPlayer;
+
     void Start()
     {
         soundPlayer = gameObject.AddComponent<AudioSource>();
@@ -11,19 +11,17 @@ public class SoundPlayer : MonoBehaviour
 
     public void PlaySound(AudioClip sound)
     {
-        if(gs.SoundOn)
+        if (GameSettings.SoundOn)
         {
             soundPlayer.PlayOneShot(sound);
-        }    
+        }
     }
 
     public void Vibrate()
     {
-        if(gs.VibrationOn)
+        if (GameSettings.VibrationOn)
         {
             Handheld.Vibrate();
         }
     }
-
-
 }

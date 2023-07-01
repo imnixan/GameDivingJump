@@ -3,14 +3,27 @@ using Dreamteck.Splines;
 
 public class GameJudge : JumperSubscribers
 {
-    [SerializeReference] private TV tv;
-    [SerializeReference] private Jumper jumper;
-    [SerializeReference] private Pool pool;
-    [SerializeReference] private SplineFollower arrow;
-    [SerializeReference] private BigYellowButton byb;
-    [SerializeReference] private Pedestal pedestal;
-    [SerializeReference] private Tribune tribune;
-    
+    [SerializeReference]
+    private TV tv;
+
+    [SerializeReference]
+    private Jumper jumper;
+
+    [SerializeReference]
+    private Pool pool;
+
+    [SerializeReference]
+    private SplineFollower arrow;
+
+    [SerializeReference]
+    private BigYellowButton byb;
+
+    [SerializeReference]
+    private Pedestal pedestal;
+
+    [SerializeReference]
+    private Tribune tribune;
+
     private const int MaxPlayersAttemps = 3;
     private CameraOperator co;
     private int _attempsLeft;
@@ -20,16 +33,12 @@ public class GameJudge : JumperSubscribers
     private bool newRecord;
     private int AttepmpsLeft
     {
-        get
-        {
-            return _attempsLeft;
-        }
-
+        get { return _attempsLeft; }
         set
         {
             _attempsLeft = value;
             tv.SetAttemps(_attempsLeft);
-            if(_attempsLeft == 0)
+            if (_attempsLeft == 0)
             {
                 EndGame();
             }
@@ -38,20 +47,18 @@ public class GameJudge : JumperSubscribers
 
     private int JumpsCount
     {
-        get 
-        {
-            return _jumpsCount;
-        }
+        get { return _jumpsCount; }
         set
         {
             _jumpsCount = value;
             tv.SetJumps(_jumpsCount);
-            if(_jumpsCount > oldRecord)
+            if (_jumpsCount > oldRecord)
             {
                 RegisterNewRecord();
             }
         }
     }
+
     private void Start()
     {
         co = Camera.main.GetComponent<CameraOperator>();
@@ -60,19 +67,19 @@ public class GameJudge : JumperSubscribers
         JumpsCount = 0;
         pedestal.gameObject.SetActive(false);
     }
-    
+
     public void OnJumperTouchedWater()
     {
         jumpWasSuccess = true;
     }
-   
+
     public void JumpFinished()
     {
         tribune.TribunesJump(jumpWasSuccess);
-        if(jumpWasSuccess)
+        if (jumpWasSuccess)
         {
             jumpWasSuccess = false;
-            JumpsCount ++;
+            JumpsCount++;
         }
         else
         {
@@ -83,7 +90,9 @@ public class GameJudge : JumperSubscribers
     public void UpdateScene()
     {
         pool.ChangeSizeAndPos();
-        arrow.followSpeed = (Mathf.Abs(arrow.followSpeed) / arrow.followSpeed) * ((Mathf.Abs(arrow.followSpeed) + 1));
+        arrow.followSpeed =
+            (Mathf.Abs(arrow.followSpeed) / arrow.followSpeed)
+            * ((Mathf.Abs(arrow.followSpeed) + 1));
     }
 
     private void RegisterNewRecord()
@@ -96,7 +105,7 @@ public class GameJudge : JumperSubscribers
     {
         byb.Hide();
         jumper.enabled = false;
-        if(newRecord)
+        if (newRecord)
         {
             PlayerPrefs.SetInt("Record", JumpsCount);
             PlayerPrefs.Save();
@@ -115,6 +124,4 @@ public class GameJudge : JumperSubscribers
     {
         JumpFinished();
     }
-
-    
 }

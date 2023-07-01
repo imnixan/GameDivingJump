@@ -8,12 +8,14 @@ public class CameraOperator : MonoBehaviour
     public event UnityAction OperatorOnStart;
     private SplineFollower sf;
     private Vector3 startPos;
+
     private void Start()
     {
         sf = GetComponent<SplineFollower>();
         sf.follow = false;
         startPos = transform.position;
     }
+
     public void MoveToPedestal()
     {
         sf.follow = true;
@@ -22,7 +24,7 @@ public class CameraOperator : MonoBehaviour
 
     public void MoveCameraToStart()
     {
-        if(transform.position == startPos)
+        if (transform.position == startPos)
         {
             OperatorOnStart?.Invoke();
         }
@@ -30,7 +32,6 @@ public class CameraOperator : MonoBehaviour
         {
             sf.follow = true;
             sf.direction = Spline.Direction.Backward;
-
         }
     }
 

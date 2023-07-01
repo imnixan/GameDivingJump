@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Champion : MonoBehaviour
 {
-    public void SetChampColor(Material color)
+    public void SetChampMat(Material mat)
     {
-        foreach(var champColor in GetComponentsInChildren<SkinnedMeshRenderer>())
+        foreach (var champMat in GetComponentsInChildren<SkinnedMeshRenderer>())
         {
-            champColor.material = color;
+            champMat.material = mat;
         }
     }
 }

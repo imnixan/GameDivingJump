@@ -8,29 +8,23 @@ public class Jumper : MonoBehaviour
     public static event UnityAction JumpStateEvent;
     public static event UnityAction LayStateEvent;
 
-    [SerializeField] private string CURRENT_STATE;
-    [SerializeReference] private GameObject arrow;
+    private bool touchedWater;
     private SoundPlayer soundPlayer;
-    private AudioClip jump, fall;
+    private AudioClip jump,
+        fall;
     private SplineFollower sf;
     private RagdollController rc;
     private Animator animator;
     private Vector3 startPos;
     private Vector3 startRot;
     private BodyStates _bodyState = BodyStates.None;
-    private bool touchedWater;
-
 
     private BodyStates BodyState
     {
-        get
-        {
-            return _bodyState;
-        }
-
+        get { return _bodyState; }
         set
         {
-            if(_bodyState != value)
+            if (_bodyState != value)
             {
                 _bodyState = value;
                 OnStateChanged();
@@ -42,10 +36,11 @@ public class Jumper : MonoBehaviour
     {
         None,
         Idle,
-        AnimJump,
-        RagdollFall,
-        RagdollLay
+        Jump,
+        Fall,
+        Lay
     }
+
     private void Start()
     {
         Initialize();
@@ -63,121 +58,109 @@ public class Jumper : MonoBehaviour
         fall = Resources.Load<AudioClip>("Sounds/Jumper_GroundFall");
         jump = Resources.Load<AudioClip>("Sounds/Jumper_Jump");
         rc.Initialize();
-
     }
 
     private void SetIdle()
     {
-        rc.SetRagdollActive(false);
-        touchedWater = false;
         animator.enabled = true;
+        animator.SetInteger("State", (int)BodyState);
+        rc.SetRagdollActive(false);
         transform.eulerAngles = startRot;
-        sf.enabled = false;
-        animator.SetInteger("State", (int) BodyState);
         transform.position = startPos;
-        arrow.SetActive(true);
+        sf.enabled = false;
+        touchedWater = false;
         IdleStateEvent?.Invoke();
     }
 
-    private void SetAnimJump()
+    private void SetJump()
     {
-        animator.SetInteger("State", (int) BodyState);
+        animator.SetInteger("State", (int)BodyState);
         soundPlayer.PlaySound(jump);
-        arrow.SetActive(false);
         sf.enabled = true;
         sf.Restart();
         JumpStateEvent?.Invoke();
     }
 
-    private void SetRagdollFall()
+    private void SetFall()
     {
         sf.enabled = false;
         rc.SetRagdollActive(true);
         animator.enabled = false;
     }
 
-    private void SetRagdollLay()
+    private void SetLay()
     {
         LayStateEvent?.Invoke();
-        if(!touchedWater)
+        if (!touchedWater)
         {
             soundPlayer.PlaySound(fall);
         }
     }
 
-
-
-
     private void OnStateChanged()
     {
-        switch(BodyState)
+        switch (BodyState)
         {
             case BodyStates.Idle:
-                CURRENT_STATE = "Idle";
                 SetIdle();
                 break;
-            case BodyStates.AnimJump:
-                CURRENT_STATE = "Jump";
-                SetAnimJump();
+            case BodyStates.Jump:
+                SetJump();
                 break;
-            case BodyStates.RagdollFall:
-                CURRENT_STATE = "Fall";
-                SetRagdollFall();
+            case BodyStates.Fall:
+                SetFall();
                 break;
-            case BodyStates.RagdollLay:
-                CURRENT_STATE = "Lay";
-                SetRagdollLay();
+            case BodyStates.Lay:
+                SetLay();
                 break;
         }
     }
 
     private void FixedUpdate()
     {
-        if(BodyState == BodyStates.AnimJump)
+        if (BodyState == BodyStates.Jump)
         {
-            if(transform.eulerAngles.x > 25)
+            if (transform.eulerAngles.x > 25)
             {
-                transform.eulerAngles = Vector3.MoveTowards(transform.eulerAngles, new Vector3(25, transform.eulerAngles.y, transform.eulerAngles.z), Time.fixedDeltaTime);
+                transform.eulerAngles = Vector3.MoveTowards(
+                    transform.eulerAngles,
+                    new Vector3(25, transform.eulerAngles.y, transform.eulerAngles.z),
+                    Time.fixedDeltaTime
+                );
             }
-
         }
     }
 
     public void OnJumpSplineFinal()
     {
-        BodyState = BodyStates.RagdollFall;
+        BodyState = BodyStates.Fall;
     }
 
-    private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.CompareTag("Floor"))
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Floor"))
         {
-            Debug.Log("PLAYER TOUCH GROUND");
-            BodyState = BodyStates.RagdollLay;
+            BodyState = BodyStates.Lay;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Water"))
+        if (other.CompareTag("Water"))
         {
             touchedWater = true;
         }
     }
 
-    private void OnDisable()
-    {
-        arrow.SetActive(false);
-    }
-
     public void BigButtonPressed()
     {
-        switch(BodyState)
+        switch (BodyState)
         {
-            case BodyStates.RagdollLay:
+            case BodyStates.Lay:
                 BodyState = BodyStates.Idle;
                 break;
             case BodyStates.Idle:
-                BodyState = BodyStates.AnimJump;
+                BodyState = BodyStates.Jump;
                 break;
         }
     }

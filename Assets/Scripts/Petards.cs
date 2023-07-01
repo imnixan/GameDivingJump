@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Petards : MonoBehaviour
@@ -8,6 +7,7 @@ public class Petards : MonoBehaviour
     private SoundPlayer soundPlayer;
     private AudioClip[] petardSounds;
     private ParticleSystem[] particles;
+
     public void PlayPetards()
     {
         soundPlayer = FindAnyObjectByType<SoundPlayer>();
@@ -18,7 +18,7 @@ public class Petards : MonoBehaviour
 
     IEnumerator PetardsExplosions()
     {
-        foreach(var petard in particles)
+        foreach (var petard in particles)
         {
             soundPlayer.PlaySound(petardSounds[Random.Range(0, petardSounds.Length)]);
             soundPlayer.Vibrate();

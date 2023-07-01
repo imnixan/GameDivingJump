@@ -3,40 +3,61 @@ using TMPro;
 
 public class Pedestal : MonoBehaviour
 {
-    
-    [SerializeReference] private Champion gameWinner, second, third;
+    private Champion gameWinner,
+        second,
+        third;
     private CameraOperator co;
     private bool playerWin;
 
     public void Initial(bool isPlayerWin)
     {
         playerWin = isPlayerWin;
+        SetFinalText();
+        SetChampionsMat();
+        PlayFinalSound();
+    }
+
+    private Material GetRandomChampMat(int bet)
+    {
+        int lotCoin = Random.Range(0, 2);
+        return lotCoin == bet ? MaterialsManager.greenColor : MaterialsManager.blueColor;
+    }
+
+    private void PlayFinalSound()
+    {
         var soundPlayer = FindAnyObjectByType<SoundPlayer>();
-        AudioClip sound;
-        GetComponentInChildren<TextMeshPro>().text = isPlayerWin? "New record!" : "Game end!";
-        int lotCoin = Random.Range(0,2);
-        third.SetChampColor(lotCoin == 0? GameSettings.greenColor : GameSettings.blueColor);
-        if(isPlayerWin)
-        {   
-            sound = Resources.Load<AudioClip>("Sounds/Pedestal_Win_Fanfar");
-            gameWinner.SetChampColor(GameSettings.playerRedColor);
-            second.SetChampColor(lotCoin == 1? GameSettings.greenColor : GameSettings.blueColor);
-        }
-        else
-        {   
-            sound = Resources.Load<AudioClip>("Sounds/Pedestal_Lose_Fanfar");
-            gameWinner.SetChampColor(lotCoin == 1? GameSettings.greenColor : GameSettings.blueColor);
-            second.SetChampColor(GameSettings.playerRedColor);
-        }
+        AudioClip sound = playerWin
+            ? sound = Resources.Load<AudioClip>("Sounds/Pedestal_Win_Fanfar")
+            : sound = Resources.Load<AudioClip>("Sounds/Pedestal_Lose_Fanfar");
         soundPlayer.PlaySound(sound);
     }
 
-    public void PlayPetards()
+    private void SetChampionsMat()
     {
-        if(playerWin)
+        third.SetChampMat(GetRandomChampMat(0));
+        if (playerWin)
+        {
+            gameWinner.SetChampMat(MaterialsManager.playerRedColor);
+            second.SetChampMat(GetRandomChampMat(1));
+        }
+        else
+        {
+            gameWinner.SetChampMat(GetRandomChampMat(1));
+            second.SetChampMat(MaterialsManager.playerRedColor);
+        }
+    }
+
+    private void PlayPetards()
+    {
+        if (playerWin)
         {
             GetComponentInChildren<Petards>().PlayPetards();
         }
+    }
+
+    private void SetFinalText()
+    {
+        GetComponentInChildren<TextMeshPro>().text = playerWin ? "New record!" : "Game end!";
     }
 
     private void OnEnable()
@@ -49,5 +70,4 @@ public class Pedestal : MonoBehaviour
     {
         co.OperatorOnFinish -= PlayPetards;
     }
-
 }

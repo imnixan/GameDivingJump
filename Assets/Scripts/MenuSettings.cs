@@ -7,59 +7,65 @@ public class MenuSettings : MonoBehaviour
 {
     private const string SoundPref = "SoundSettings";
     private const string VibroPref = "VibrationSettings";
-    [SerializeField] TextMeshPro tablo;
-    [SerializeField] Button soundButton;
-    [SerializeField] private Sprite[] soundIcons, vibroIcons;
-    [SerializeField] Image vibroButtonIcon;
-    private bool _soundOn, _vibroOn;
+
+    [SerializeField]
+    TextMeshPro tablo;
+
+    [SerializeField]
+    Button soundButton,
+        vibroButton;
+
+    [SerializeField]
+    private Sprite[] soundIcons,
+        vibroIcons;
+    private bool _soundOn,
+        _vibroOn;
     public bool SoundOn
     {
-        get
-        {
-            return _soundOn;
-        }
-
+        get { return _soundOn; }
         set
         {
+            Debug.Log($"Sound was {_soundOn} and now is {value}");
             _soundOn = value;
-            ChangeSettings(SoundPref, _soundOn? 1 : 0, soundButton.image ,soundIcons);
+            UpdatePrefsAndIcon(SoundPref, _soundOn ? 1 : 0, soundButton.image, soundIcons);
         }
     }
 
-     public bool VibroOn
+    public bool VibroOn
     {
-        get
-        {
-            return _vibroOn;
-        }
-
+        get { return _vibroOn; }
         set
         {
-            _vibroOn = !_vibroOn;
-            ChangeSettings(VibroPref, _vibroOn? 1 : 0, vibroButtonIcon, vibroIcons);
+            Debug.Log($"Vibro was {_vibroOn} and now is {value}");
+            _vibroOn = value;
+            UpdatePrefsAndIcon(VibroPref, _vibroOn ? 1 : 0, vibroButton.image, vibroIcons);
         }
     }
 
-    private void ChangeSettings(string prefs, int status, Image image, Sprite[] iconsSet)
+    private void UpdatePrefsAndIcon(string prefs, int status, Image image, Sprite[] iconsSet)
     {
         PlayerPrefs.SetInt(prefs, status);
         PlayerPrefs.Save();
         image.sprite = iconsSet[status];
-        Debug.Log($"setting {prefs}, now in status {status}");
     }
 
     void Start()
     {
         tablo.text = Application.productName;
         SoundOn = PlayerPrefs.GetInt(SoundPref, 1) == 1;
-        _vibroOn = PlayerPrefs.GetInt(VibroPref, 1) == 1;
-        ChangeSettings(VibroPref, _vibroOn? 1 : 0, vibroButtonIcon, vibroIcons);
-        soundButton.onClick.AddListener(SoundClick);
-    }
-
-    private void SoundClick()
-    {
-        SoundOn = !SoundOn;
+        VibroOn = PlayerPrefs.GetInt(VibroPref, 1) == 1;
+        soundButton.onClick.AddListener(
+            delegate
+            {
+                SoundOn = !SoundOn;
+            }
+        );
+        vibroButton.onClick.AddListener(
+            delegate
+            {
+                VibroOn = !VibroOn;
+            }
+        );
     }
 
     public void StartGame()

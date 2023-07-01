@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class RagdollController : MonoBehaviour
 {
-   
-   private Rigidbody[] rbs;
-   private Collider[] colliders;
+    private Rigidbody[] rbs;
+    private Collider[] colliders;
 
     public void Initialize()
     {
@@ -13,18 +12,17 @@ public class RagdollController : MonoBehaviour
         SetRagdollActive(false);
     }
 
-
-
-    public void SetRagdollActive(bool ragdollStatus){
-        foreach(var collider in colliders)
+    public void SetRagdollActive(bool ragdollStatus)
+    {
+        foreach (var collider in colliders)
         {
             collider.enabled = ragdollStatus;
         }
-        foreach(var rb in rbs)
+        foreach (var rb in rbs)
         {
             rb.useGravity = ragdollStatus;
             rb.isKinematic = !ragdollStatus;
-            if(rb.useGravity)
+            if (rb.useGravity)
             {
                 rb.velocity = Vector3.down * 12;
                 rb.angularVelocity = Vector3.zero;

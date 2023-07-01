@@ -14,7 +14,9 @@ public class Tribune : MonoBehaviour
         soundPlayer = FindAnyObjectByType<SoundPlayer>();
         succes = Resources.Load<AudioClip>("Sounds/Tribune_Success");
         fail = Resources.Load<AudioClip>("Sounds/Tribune_Fail");
+        ColorizeFans();
     }
+
 
     public void TribunesJump(bool jumpWasSuccess)
     {
@@ -22,18 +24,32 @@ public class Tribune : MonoBehaviour
         StartCoroutine(StandUpFans());
     }
 
+    private void ColorizeFans()
+    {
+        foreach(var fan in fans)
+        {
+            fan.SetMaterial(GetRandomMaterial());
+        }
+    }
+
+    private Material GetRandomMaterial()
+    {
+        return MaterialsManager.GetMaterials()
+            [Random.Range(0,3)];
+    }
+
     private void SetFanMat(bool jumpWasSuccess)
     {
         if(jumpWasSuccess)
         {
-            jumpingFanMaterial = GameSettings.playerRedColor;
+            jumpingFanMaterial = MaterialsManager.playerRedColor;
             soundPlayer.PlaySound(succes);
         }
         else
         {
             int tolCoin = Random.Range(0,2);
             soundPlayer.PlaySound(fail);
-            jumpingFanMaterial = tolCoin == 1? GameSettings.greenColor : GameSettings.blueColor;
+            jumpingFanMaterial = tolCoin == 1? MaterialsManager.greenColor : MaterialsManager.blueColor;
         }
     }
 

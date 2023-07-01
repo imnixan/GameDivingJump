@@ -6,6 +6,12 @@ public class BigYellowButton : JumperSubscribers
     private TextMeshProUGUI buttonText;
     private Button button;
 
+    public void Hide()
+    {
+        button.interactable = false;
+        buttonText.text = "";
+    }
+
     private void Start()
     {
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
@@ -29,11 +35,4 @@ public class BigYellowButton : JumperSubscribers
         button.interactable = true;
         buttonText.text = "Next!";
     }
-
-    public void Hide()
-    {
-        button.interactable = false;
-        buttonText.text = "";
-    }
-
 }
