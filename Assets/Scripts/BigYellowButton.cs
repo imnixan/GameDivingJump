@@ -12,6 +12,11 @@ public class BigYellowButton : JumperSubscribers
         buttonText.text = "";
     }
 
+    public void NextPlayer()
+    {
+        buttonText.text = "Next\nPlayer";
+    }
+
     private void Start()
     {
         buttonText = GetComponentInChildren<TextMeshProUGUI>();

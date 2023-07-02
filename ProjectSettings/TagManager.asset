@@ -8,6 +8,12 @@ TagManager:
   - Floor
   - Water
   - SoundPlayer
+  - LinkSaver
+  - Pedestal
+  - Tribune
+  - GameJudge
+  - byb
+  - JumperSpline
   layers:
   - Default
   - TransparentFX

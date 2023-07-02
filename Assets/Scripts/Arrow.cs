@@ -23,4 +23,10 @@ public class Arrow : JumperSubscribers
         arrowObj.SetActive(false);
         sf.follow = false;
     }
+
+    public void UpSpeed()
+    {
+        sf.followSpeed =
+            (Mathf.Abs(sf.followSpeed) / sf.followSpeed) * ((Mathf.Abs(sf.followSpeed) + 1));
+    }
 }

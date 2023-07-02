@@ -3,41 +3,22 @@ using Dreamteck.Splines;
 
 public class GameJudge : JumperSubscribers
 {
-    [SerializeReference]
-    private TV tv;
-
-    [SerializeReference]
-    private Jumper jumper;
-
-    [SerializeReference]
-    private Pool pool;
-
-    [SerializeReference]
-    private SplineFollower arrow;
-
-    [SerializeReference]
-    private BigYellowButton byb;
-
-    [SerializeReference]
-    private Pedestal pedestal;
-
-    [SerializeReference]
-    private Tribune tribune;
+    protected LinkSaver linkSaver;
 
     private const int MaxPlayersAttemps = 3;
-    private CameraOperator co;
-    private int _attempsLeft;
-    private int _jumpsCount;
     private int oldRecord;
-    private bool jumpWasSuccess;
-    private bool newRecord;
+    private int _jumpsCount;
+    protected CameraOperator co;
+    protected int _attempsLeft;
+    protected bool jumpWasSuccess;
+    protected bool newRecord;
     private int AttepmpsLeft
     {
         get { return _attempsLeft; }
         set
         {
             _attempsLeft = value;
-            tv.SetAttemps(_attempsLeft);
+            linkSaver.tv.SetAttemps(_attempsLeft);
             if (_attempsLeft == 0)
             {
                 EndGame();
@@ -51,7 +32,7 @@ public class GameJudge : JumperSubscribers
         set
         {
             _jumpsCount = value;
-            tv.SetJumps(_jumpsCount);
+            linkSaver.tv.SetJumps(_jumpsCount);
             if (_jumpsCount > oldRecord)
             {
                 RegisterNewRecord();
@@ -61,11 +42,17 @@ public class GameJudge : JumperSubscribers
 
     private void Start()
     {
+        InitializeFields();
+        linkSaver.pedestal.gameObject.SetActive(false);
+    }
+
+    protected virtual void InitializeFields()
+    {
+        linkSaver = GameObject.FindWithTag("LinkSaver").GetComponent<LinkSaver>();
         co = Camera.main.GetComponent<CameraOperator>();
         oldRecord = PlayerPrefs.GetInt("Record");
         AttepmpsLeft = MaxPlayersAttemps;
         JumpsCount = 0;
-        pedestal.gameObject.SetActive(false);
     }
 
     public void OnJumperTouchedWater()
@@ -73,9 +60,9 @@ public class GameJudge : JumperSubscribers
         jumpWasSuccess = true;
     }
 
-    public void JumpFinished()
+    public virtual void JumpFinished()
     {
-        tribune.TribunesJump(jumpWasSuccess);
+        linkSaver.tribune.TribunesJump(jumpWasSuccess);
         if (jumpWasSuccess)
         {
             jumpWasSuccess = false;
@@ -89,30 +76,26 @@ public class GameJudge : JumperSubscribers
 
     public void UpdateScene()
     {
-        pool.ChangeSizeAndPos();
-        arrow.followSpeed =
-            (Mathf.Abs(arrow.followSpeed) / arrow.followSpeed)
-            * ((Mathf.Abs(arrow.followSpeed) + 1));
+        linkSaver.pool.ChangeSizeAndPos();
+        linkSaver.arrow.UpSpeed();
     }
 
-    private void RegisterNewRecord()
+    protected void RegisterNewRecord()
     {
-        tv.SetNewRecord();
+        linkSaver.tv.SetNewRecord();
         newRecord = true;
     }
 
-    private void EndGame()
+    protected virtual void EndGame()
     {
-        byb.Hide();
-        jumper.enabled = false;
+        HideUIAndMoveToPedestal();
+
         if (newRecord)
         {
             PlayerPrefs.SetInt("Record", JumpsCount);
             PlayerPrefs.Save();
         }
-        pedestal.gameObject.SetActive(true);
-        pedestal.Initial(newRecord);
-        co.MoveToPedestal();
+        linkSaver.pedestal.Initial(newRecord);
     }
 
     protected override void OnJumperIdle()
@@ -123,5 +106,13 @@ public class GameJudge : JumperSubscribers
     protected override void OnJumperLay()
     {
         JumpFinished();
+    }
+
+    protected void HideUIAndMoveToPedestal()
+    {
+        linkSaver.byb.Hide();
+        linkSaver.jumper.enabled = false;
+        linkSaver.pedestal.gameObject.SetActive(true);
+        co.MoveToPedestal();
     }
 }

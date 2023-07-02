@@ -47,20 +47,21 @@ public class Jumper : MonoBehaviour
         BodyState = BodyStates.Idle;
     }
 
-    private void Initialize()
+    protected virtual void Initialize()
     {
         startPos = transform.position;
         startRot = transform.eulerAngles;
         animator = GetComponent<Animator>();
         sf = GetComponent<SplineFollower>();
-        rc = GetComponent<RagdollController>();
+        sf.onEndReached += OnJumpSplineFinal;
+        rc = gameObject.AddComponent<RagdollController>();
         soundPlayer = GameObject.FindAnyObjectByType<SoundPlayer>();
         fall = Resources.Load<AudioClip>("Sounds/Jumper_GroundFall");
         jump = Resources.Load<AudioClip>("Sounds/Jumper_Jump");
         rc.Initialize();
     }
 
-    private void SetIdle()
+    protected virtual void SetIdle()
     {
         animator.enabled = true;
         animator.SetInteger("State", (int)BodyState);
@@ -83,6 +84,7 @@ public class Jumper : MonoBehaviour
 
     private void SetFall()
     {
+        Debug.Log("fall");
         sf.enabled = false;
         rc.SetRagdollActive(true);
         animator.enabled = false;
@@ -131,7 +133,7 @@ public class Jumper : MonoBehaviour
         }
     }
 
-    public void OnJumpSplineFinal()
+    public void OnJumpSplineFinal(double a)
     {
         BodyState = BodyStates.Fall;
     }
@@ -164,4 +166,6 @@ public class Jumper : MonoBehaviour
                 break;
         }
     }
+
+    public virtual void ChangeMaterial(Material material) { }
 }

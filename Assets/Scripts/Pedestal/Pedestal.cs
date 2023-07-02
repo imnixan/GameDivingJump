@@ -1,29 +1,31 @@
 using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
 
 public class Pedestal : MonoBehaviour
 {
-    private Champion gameWinner,
-        second,
-        third;
+    private const int WinnerID = 0;
+    private const int SecondID = 1;
+    private const int ThirdID = 2;
+    protected Champion[] champions;
     private CameraOperator co;
     private bool playerWin;
 
     public void Initial(bool isPlayerWin)
     {
         playerWin = isPlayerWin;
+        InitialChampions();
         SetFinalText();
         SetChampionsMat();
         PlayFinalSound();
     }
 
-    private Material GetRandomChampMat(int bet)
+    protected void InitialChampions()
     {
-        int lotCoin = Random.Range(0, 2);
-        return lotCoin == bet ? MaterialsManager.greenColor : MaterialsManager.blueColor;
+        champions = GetComponentsInChildren<Champion>();
     }
 
-    private void PlayFinalSound()
+    protected virtual void PlayFinalSound()
     {
         var soundPlayer = FindAnyObjectByType<SoundPlayer>();
         AudioClip sound = playerWin
@@ -34,16 +36,16 @@ public class Pedestal : MonoBehaviour
 
     private void SetChampionsMat()
     {
-        third.SetChampMat(GetRandomChampMat(0));
+        champions[ThirdID].SetChampMat(MaterialsManager.Materials[ThirdID]);
         if (playerWin)
         {
-            gameWinner.SetChampMat(MaterialsManager.playerRedColor);
-            second.SetChampMat(GetRandomChampMat(1));
+            champions[WinnerID].SetChampMat(MaterialsManager.Materials[WinnerID]);
+            champions[SecondID].SetChampMat(MaterialsManager.Materials[SecondID]);
         }
         else
         {
-            gameWinner.SetChampMat(GetRandomChampMat(1));
-            second.SetChampMat(MaterialsManager.playerRedColor);
+            champions[WinnerID].SetChampMat(MaterialsManager.Materials[SecondID]);
+            champions[SecondID].SetChampMat(MaterialsManager.Materials[WinnerID]);
         }
     }
 
@@ -70,4 +72,6 @@ public class Pedestal : MonoBehaviour
     {
         co.OperatorOnFinish -= PlayPetards;
     }
+
+    public virtual void Initial(Dictionary<int, int> playersJumps) { }
 }

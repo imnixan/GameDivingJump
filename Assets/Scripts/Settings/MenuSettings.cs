@@ -71,6 +71,13 @@ public class MenuSettings : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("GameScene");
+        CrossSceneInfo.MultiplayerMode = false;
+    }
+
+    public void StartMultiplayer()
+    {
+        SceneManager.LoadScene("GameScene");
+        CrossSceneInfo.MultiplayerMode = true;
     }
 
     public void ExitGame()

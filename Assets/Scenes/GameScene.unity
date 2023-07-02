@@ -1614,7 +1614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f33f5f5c785bf4e985ceba7bdf4c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gs: {fileID: 495601322}
 --- !u!1 &146667839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,7 +1626,7 @@ GameObject:
   - component: {fileID: 146667841}
   m_Layer: 0
   m_Name: FansTribune
-  m_TagString: Untagged
+  m_TagString: Tribune
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2394,6 +2393,56 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &188557643
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 188557645}
+  - component: {fileID: 188557644}
+  m_Layer: 0
+  m_Name: LinkSaver
+  m_TagString: LinkSaver
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &188557644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188557643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3337ae858019a46abe23183bc431cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tv: {fileID: 1961927737}
+  _jumper: {fileID: 0}
+  _pool: {fileID: 3469287838278261870}
+  _arrow: {fileID: 752677347}
+  _byb: {fileID: 1508357452}
+  _tribune: {fileID: 146667841}
+--- !u!4 &188557645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188557643}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.865571, y: 28.819149, z: 55.061516}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &191181783
 GameObject:
   m_ObjectHideFlags: 0
@@ -19984,8 +20033,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c0a07d392291c468b392e89ae37d36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundOn: 0
-  VibrationOn: 0
 --- !u!4 &495601323
 Transform:
   m_ObjectHideFlags: 0
@@ -30013,7 +30060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c2a64088244e9428bf4bbfcae15534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gj: {fileID: 1798260757}
 --- !u!135 &1000660775
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -48889,7 +48935,7 @@ GameObject:
   - component: {fileID: 1508357452}
   m_Layer: 5
   m_Name: BigYellowButton
-  m_TagString: Untagged
+  m_TagString: byb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48959,18 +49005,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4782471328203859991}
-        m_TargetAssemblyTypeName: Jumper, Assembly-CSharp
-        m_MethodName: BigButtonPressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 145223970}
         m_TargetAssemblyTypeName: SoundPlayer, Assembly-CSharp
         m_MethodName: Vibrate
@@ -50193,10 +50227,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1644973621}
-  - component: {fileID: 1644973622}
   m_Layer: 0
   m_Name: Pedestal
-  m_TagString: Untagged
+  m_TagString: Pedestal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50224,21 +50257,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1644973622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644973620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7648d1001d154942855f96f45d16afd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameWinner: {fileID: 7215714862336074035}
-  second: {fileID: 745444296}
-  third: {fileID: 930813224}
 --- !u!1 &1654193992
 GameObject:
   m_ObjectHideFlags: 0
@@ -56543,10 +56561,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1798260756}
-  - component: {fileID: 1798260757}
   m_Layer: 0
   m_Name: GameJudge
-  m_TagString: Untagged
+  m_TagString: GameJudge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56566,25 +56583,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1798260757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798260755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c503699b4167e6546acda80afc5d90cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tv: {fileID: 1961927737}
-  jumper: {fileID: 4782471328203859991}
-  pool: {fileID: 3469287838278261870}
-  arrow: {fileID: 752677346}
-  byb: {fileID: 1508357452}
-  pedestal: {fileID: 1644973622}
-  tribune: {fileID: 146667841}
 --- !u!1 &1808910547
 GameObject:
   m_ObjectHideFlags: 0
@@ -62663,6 +62661,7 @@ MonoBehaviour:
   attemps: {fileID: 855720987}
   jumps: {fileID: 556990658}
   recordIcon: {fileID: 1117880680}
+  heartIcon: {fileID: 670481117}
 --- !u!1 &1970378657
 GameObject:
   m_ObjectHideFlags: 0
@@ -63963,6 +63962,50 @@ Transform:
   m_Father: {fileID: 2019242908}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2068863048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2068863050}
+  - component: {fileID: 2068863049}
+  m_Layer: 0
+  m_Name: SceneInitializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2068863049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068863048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b35e9bfd1710d4eb2286a48b0b9f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2068863050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068863048}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.865571, y: 28.819149, z: 55.061516}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2085006582
 GameObject:
   m_ObjectHideFlags: 0
@@ -65233,8 +65276,6 @@ GameObject:
   - component: {fileID: 4782471328203859990}
   - component: {fileID: 4782471328203859993}
   - component: {fileID: 4782471328203859992}
-  - component: {fileID: 4782471328203859991}
-  - component: {fileID: 4782471328203859995}
   - component: {fileID: 4782471328203859996}
   m_Layer: 0
   m_Name: JumperWithRagdoll
@@ -65481,8 +65522,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ab48a28f50882408efe79a24b1e376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxX: 7.38
-  minX: -3.23
 --- !u!54 &3469287838278261871
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -66003,18 +66042,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4782471328203859991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2302812950686689494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfca33dcd3680a14390d1b6d4a1d5ee0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4782471328203859992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66161,7 +66188,7 @@ MonoBehaviour:
   _unityOnEndReached:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4782471328203859991}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Jumper, Assembly-CSharp
         m_MethodName: OnJumpSplineFinal
         m_Mode: 1
@@ -66190,18 +66217,6 @@ CapsuleCollider:
   m_Height: 0.5860407
   m_Direction: 1
   m_Center: {x: 0, y: 0.55, z: 1.663246e-11}
---- !u!114 &4782471328203859995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2302812950686689494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41b1e834b0c127548bab87370652e66e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &4782471328203859996
 Rigidbody:
   m_ObjectHideFlags: 0

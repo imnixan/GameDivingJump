@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class Water : MonoBehaviour
 {
-    [SerializeReference]
     private GameJudge gj;
     private ParticleSystem ps;
     private AudioClip[] waterSplashes;
     private SoundPlayer soundPlayer;
 
-    private void Start()
+    public void Initialize(GameJudge gameJudge)
     {
         ps = GetComponentInChildren<ParticleSystem>();
         soundPlayer = FindAnyObjectByType<SoundPlayer>();
         waterSplashes = Resources.LoadAll<AudioClip>("Sounds/WaterSplashes");
+        gj = gameJudge;
     }
 
     public void OnTriggerEnter(Collider collider)
