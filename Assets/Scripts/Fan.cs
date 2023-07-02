@@ -34,8 +34,7 @@ public class Fan : MonoBehaviour
 
     public bool SameMaterial(Material material)
     {
-        bool sameMat = this.material.color == material.color;
-        return sameMat;
+        return this.material.color == material.color;
     }
 
     IEnumerator FanJumpAnim()
@@ -66,7 +65,7 @@ public class Fan : MonoBehaviour
                     onTop = true;
                 }
             }
-            yield return Time.fixedDeltaTime;
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
     }
 }
